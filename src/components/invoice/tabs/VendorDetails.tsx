@@ -1,6 +1,15 @@
 import React from 'react';
-import { FormikProps } from 'formik';
-import { InvoiceFormData, vendorOptions } from '../../../utils/dummyData';
+import type { FormikProps } from 'formik';
+import type { InvoiceFormData } from '../../../utils/dummyData';
+import {
+  vendorOptions,
+  paymentTermsOptions,
+  departmentOptions,
+  accountOptions,
+  locationOptions,
+} from '../../../utils/dummyData';
+
+import { FileSpreadsheet, ReceiptText } from 'lucide-react';
 
 interface VendorDetailsProps {
   formik: FormikProps<InvoiceFormData>;
@@ -8,27 +17,18 @@ interface VendorDetailsProps {
 
 const VendorDetails: React.FC<VendorDetailsProps> = ({ formik }) => {
   return (
-    <div className='space-y-6'>
-      <div className='flex items-center space-x-2 mb-6'>
-        <div className='w-6 h-6 bg-blue-600 rounded flex items-center justify-center'>
-          <svg
-            className='w-4 h-4 text-white'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h3M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'
-            />
-          </svg>
-        </div>
-        <h2 className='text-lg font-semibold text-gray-900'>Vendor Details</h2>
-      </div>
-
+    <div className='space-y-8'>
+      {/* Vendor Information Section */}
       <div>
+        <div className='flex items-center space-x-2 mb-6'>
+          <div className='w-6 h-6 bg-blue-600 rounded flex items-center justify-center'>
+            <FileSpreadsheet className='text-white h-4 w-4' />
+          </div>
+          <h2 className='text-lg font-semibold text-gray-900'>
+            Vendor Details
+          </h2>
+        </div>
+
         <h3 className='text-base font-medium text-gray-900 mb-4'>
           Vendor Information
         </h3>
@@ -103,6 +103,474 @@ const VendorDetails: React.FC<VendorDetailsProps> = ({ formik }) => {
               ↗ View Vendor Details
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Invoice Details Section */}
+      <div>
+        <div className='flex items-center space-x-2 mb-6'>
+          <div className='w-6 h-6 bg-blue-600 rounded flex items-center justify-center'>
+            <ReceiptText className='text-white h-4 w-4' />
+          </div>
+          <h2 className='text-lg font-semibold text-gray-900'>
+            Invoice Details
+          </h2>
+        </div>
+
+        {/* General Information */}
+        <div className='mb-6'>
+          <h3 className='text-base font-medium text-gray-900 mb-4'>
+            General Information
+          </h3>
+          <div>
+            <label
+              htmlFor='purchaseOrderNumber'
+              className='block text-sm font-medium text-gray-700 mb-1'
+            >
+              Purchase Order Number *
+            </label>
+            <input
+              type='text'
+              id='purchaseOrderNumber'
+              name='purchaseOrderNumber'
+              value={formik.values.purchaseOrderNumber}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder='Select PO Number'
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                formik.touched.purchaseOrderNumber &&
+                formik.errors.purchaseOrderNumber
+                  ? 'border-red-300'
+                  : 'border-gray-300'
+              }`}
+            />
+            {formik.touched.purchaseOrderNumber &&
+              formik.errors.purchaseOrderNumber && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.purchaseOrderNumber}
+                </p>
+              )}
+          </div>
+        </div>
+
+        {/* Invoice Details */}
+        <div className='mb-6'>
+          <h3 className='text-base font-medium text-gray-900 mb-4'>
+            Invoice Details
+          </h3>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div>
+              <label
+                htmlFor='invoiceNumber'
+                className='block text-sm font-medium text-gray-700 mb-1'
+              >
+                Invoice Number *
+              </label>
+              <input
+                type='text'
+                id='invoiceNumber'
+                name='invoiceNumber'
+                value={formik.values.invoiceNumber}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder='Enter invoice number'
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  formik.touched.invoiceNumber && formik.errors.invoiceNumber
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              />
+              {formik.touched.invoiceNumber && formik.errors.invoiceNumber && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.invoiceNumber}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor='invoiceDate'
+                className='block text-sm font-medium text-gray-700 mb-1'
+              >
+                Invoice Date *
+              </label>
+              <input
+                type='date'
+                id='invoiceDate'
+                name='invoiceDate'
+                value={formik.values.invoiceDate}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  formik.touched.invoiceDate && formik.errors.invoiceDate
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              />
+              {formik.touched.invoiceDate && formik.errors.invoiceDate && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.invoiceDate}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor='totalAmount'
+                className='block text-sm font-medium text-gray-700 mb-1'
+              >
+                Total Amount *
+              </label>
+              <div className='relative'>
+                <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                  <span className='text-gray-500 sm:text-sm'>$</span>
+                </div>
+                <input
+                  type='number'
+                  id='totalAmount'
+                  name='totalAmount'
+                  value={formik.values.totalAmount}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder='0.00'
+                  step='0.01'
+                  className={`w-full pl-7 pr-12 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    formik.touched.totalAmount && formik.errors.totalAmount
+                      ? 'border-red-300'
+                      : 'border-gray-300'
+                  }`}
+                />
+                <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
+                  <span className='text-gray-500 sm:text-sm'>USD</span>
+                </div>
+              </div>
+              {formik.touched.totalAmount && formik.errors.totalAmount && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.totalAmount}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor='paymentTerms'
+                className='block text-sm font-medium text-gray-700 mb-1'
+              >
+                Payment Terms *
+              </label>
+              <select
+                id='paymentTerms'
+                name='paymentTerms'
+                value={formik.values.paymentTerms}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  formik.touched.paymentTerms && formik.errors.paymentTerms
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              >
+                <option value=''>Select</option>
+                {paymentTermsOptions.map((term) => (
+                  <option key={term} value={term}>
+                    {term}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.paymentTerms && formik.errors.paymentTerms && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.paymentTerms}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor='invoiceDueDate'
+                className='block text-sm font-medium text-gray-700 mb-1'
+              >
+                Invoice Due Date *
+              </label>
+              <input
+                type='date'
+                id='invoiceDueDate'
+                name='invoiceDueDate'
+                value={formik.values.invoiceDueDate}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  formik.touched.invoiceDueDate && formik.errors.invoiceDueDate
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              />
+              {formik.touched.invoiceDueDate &&
+                formik.errors.invoiceDueDate && (
+                  <p className='mt-1 text-sm text-red-600'>
+                    {formik.errors.invoiceDueDate}
+                  </p>
+                )}
+            </div>
+
+            <div>
+              <label
+                htmlFor='glPostDate'
+                className='block text-sm font-medium text-gray-700 mb-1'
+              >
+                GL Post Date *
+              </label>
+              <input
+                type='date'
+                id='glPostDate'
+                name='glPostDate'
+                value={formik.values.glPostDate}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  formik.touched.glPostDate && formik.errors.glPostDate
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              />
+              {formik.touched.glPostDate && formik.errors.glPostDate && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.glPostDate}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className='mt-4'>
+            <label
+              htmlFor='invoiceDescription'
+              className='block text-sm font-medium text-gray-700 mb-1'
+            >
+              Invoice Description *
+            </label>
+            <textarea
+              id='invoiceDescription'
+              name='invoiceDescription'
+              rows={3}
+              value={formik.values.invoiceDescription}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              placeholder='Enter invoice description'
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                formik.touched.invoiceDescription &&
+                formik.errors.invoiceDescription
+                  ? 'border-red-300'
+                  : 'border-gray-300'
+              }`}
+            />
+            {formik.touched.invoiceDescription &&
+              formik.errors.invoiceDescription && (
+                <p className='mt-1 text-sm text-red-600'>
+                  {formik.errors.invoiceDescription}
+                </p>
+              )}
+          </div>
+        </div>
+      </div>
+
+      {/* Expense Details Section */}
+      <div>
+        <div className='flex items-center justify-between mb-6'>
+          <h2 className='text-lg font-semibold text-gray-900'>
+            Expense Details
+          </h2>
+          <div className='text-sm text-gray-600'>
+            $ 0.00 / <span className='text-blue-600'>$ 0.00</span>
+          </div>
+        </div>
+
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+          <div>
+            <label
+              htmlFor='lineAmount'
+              className='block text-sm font-medium text-gray-700 mb-1'
+            >
+              Line Amount *
+            </label>
+            <div className='relative'>
+              <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
+                <span className='text-gray-500 sm:text-sm'>$</span>
+              </div>
+              <input
+                type='number'
+                id='lineAmount'
+                name='lineAmount'
+                value={formik.values.lineAmount}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                placeholder='0.00'
+                step='0.01'
+                className={`w-full pl-7 pr-12 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  formik.touched.lineAmount && formik.errors.lineAmount
+                    ? 'border-red-300'
+                    : 'border-gray-300'
+                }`}
+              />
+              <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
+                <span className='text-gray-500 sm:text-sm'>USD</span>
+              </div>
+            </div>
+            {formik.touched.lineAmount && formik.errors.lineAmount && (
+              <p className='mt-1 text-sm text-red-600'>
+                {formik.errors.lineAmount}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor='department'
+              className='block text-sm font-medium text-gray-700 mb-1'
+            >
+              Department *
+            </label>
+            <select
+              id='department'
+              name='department'
+              value={formik.values.department}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                formik.touched.department && formik.errors.department
+                  ? 'border-red-300'
+                  : 'border-gray-300'
+              }`}
+            >
+              <option value=''>Select Department</option>
+              {departmentOptions.map((dept) => (
+                <option key={dept} value={dept}>
+                  {dept}
+                </option>
+              ))}
+            </select>
+            {formik.touched.department && formik.errors.department && (
+              <p className='mt-1 text-sm text-red-600'>
+                {formik.errors.department}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor='account'
+              className='block text-sm font-medium text-gray-700 mb-1'
+            >
+              Account *
+            </label>
+            <select
+              id='account'
+              name='account'
+              value={formik.values.account}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                formik.touched.account && formik.errors.account
+                  ? 'border-red-300'
+                  : 'border-gray-300'
+              }`}
+            >
+              <option value=''>Select Account</option>
+              {accountOptions.map((account) => (
+                <option key={account} value={account}>
+                  {account}
+                </option>
+              ))}
+            </select>
+            {formik.touched.account && formik.errors.account && (
+              <p className='mt-1 text-sm text-red-600'>
+                {formik.errors.account}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label
+              htmlFor='location'
+              className='block text-sm font-medium text-gray-700 mb-1'
+            >
+              Location *
+            </label>
+            <select
+              id='location'
+              name='location'
+              value={formik.values.location}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                formik.touched.location && formik.errors.location
+                  ? 'border-red-300'
+                  : 'border-gray-300'
+              }`}
+            >
+              <option value=''>Select Location</option>
+              {locationOptions.map((location) => (
+                <option key={location} value={location}>
+                  {location}
+                </option>
+              ))}
+            </select>
+            {formik.touched.location && formik.errors.location && (
+              <p className='mt-1 text-sm text-red-600'>
+                {formik.errors.location}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className='mt-4'>
+          <label
+            htmlFor='expenseDescription'
+            className='block text-sm font-medium text-gray-700 mb-1'
+          >
+            Description *
+          </label>
+          <textarea
+            id='expenseDescription'
+            name='expenseDescription'
+            rows={3}
+            value={formik.values.expenseDescription}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder='Enter expense description'
+            className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+              formik.touched.expenseDescription &&
+              formik.errors.expenseDescription
+                ? 'border-red-300'
+                : 'border-gray-300'
+            }`}
+          />
+          {formik.touched.expenseDescription &&
+            formik.errors.expenseDescription && (
+              <p className='mt-1 text-sm text-red-600'>
+                {formik.errors.expenseDescription}
+              </p>
+            )}
+        </div>
+
+        <div className='mt-6'>
+          <button
+            type='button'
+            className='inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+          >
+            <svg
+              className='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+              />
+            </svg>
+            Add Expense Coding
+          </button>
         </div>
       </div>
     </div>

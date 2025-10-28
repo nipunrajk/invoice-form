@@ -1,6 +1,6 @@
 import React from 'react';
-import { FormikProps } from 'formik';
-import { InvoiceFormData } from '../../../utils/dummyData';
+import type { FormikProps } from 'formik';
+import type { InvoiceFormData } from '../../../utils/dummyData';
 
 interface CommentsProps {
   formik: FormikProps<InvoiceFormData>;

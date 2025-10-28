@@ -4,11 +4,8 @@ import PDFUpload from './PDFUpload';
 import VendorDetails from './tabs/VendorDetails';
 import InvoiceDetails from './tabs/InvoiceDetails';
 import Comments from './tabs/Comments';
-import {
-  InvoiceFormData,
-  dummyInvoiceData,
-  loadDummyPDF,
-} from '../../utils/dummyData';
+import type { InvoiceFormData } from '../../utils/dummyData';
+import { dummyInvoiceData, loadDummyPDF } from '../../utils/dummyData';
 import { RefreshCcw } from 'lucide-react';
 
 type TabType = 'vendor' | 'invoice' | 'comments';

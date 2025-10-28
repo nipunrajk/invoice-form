@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormikProps } from 'formik';
+import type { FormikProps } from 'formik';
+import type { InvoiceFormData } from '../../../utils/dummyData';
 import {
-  InvoiceFormData,
   paymentTermsOptions,
   departmentOptions,
   accountOptions,
