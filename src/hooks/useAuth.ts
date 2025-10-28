@@ -5,7 +5,7 @@ interface User {
   password: string;
 }
 
-// Hardcoded users for demo
+// Hardcoded users
 const DEMO_USERS: User[] = [
   { username: 'admin', password: 'admin123' },
   { username: 'user', password: 'user123' },
@@ -17,7 +17,7 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Check if user session exists in localStorage
+    // Check localStorage
     const session = localStorage.getItem('userSession');
     if (session) {
       setIsAuthenticated(true);

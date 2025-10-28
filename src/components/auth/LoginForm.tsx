@@ -32,6 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
       return errors;
     },
     onSubmit: (values) => {
+      setLoginError('');
       const success = onLogin(values.username, values.password);
       if (!success) {
         setLoginError('Invalid username or password');
@@ -68,12 +69,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 } rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder='Username'
                 value={formik.values.username}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  if (loginError) setLoginError('');
+                }}
                 onBlur={formik.handleBlur}
               />
               {formik.touched.username && formik.errors.username && (
-                <p className='mt-1 text-sm text-red-600'>
-                  {formik.errors.username}
+                <p className='mt-2 text-sm text-red-600'>
+                  *{formik.errors.username}
                 </p>
               )}
             </div>
@@ -93,12 +97,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 } rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder='Password'
                 value={formik.values.password}
-                onChange={formik.handleChange}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  if (loginError) setLoginError('');
+                }}
                 onBlur={formik.handleBlur}
               />
               {formik.touched.password && formik.errors.password && (
-                <p className='mt-1 text-sm text-red-600'>
-                  {formik.errors.password}
+                <p className='mt-2 text-sm text-red-600'>
+                  *{formik.errors.password}
                 </p>
               )}
             </div>
